@@ -12,7 +12,6 @@
                 type="email"
                 class="form-control"
                 id="exampleInputEmail1"
-                aria-describedby="emailHelp"
                 placeholder="E-mail(netko@example.com)"
               />
               <br />

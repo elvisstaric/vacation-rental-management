@@ -2,7 +2,10 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/login">Log In</router-link> |
-    <router-link to="/registracija">Registracija</router-link>
+    <router-link to="/registracija">Registracija</router-link> |
+    <router-link to="/dodaj_objekt">Dodavanje objekta</router-link> |
+    <router-link to="/dodaj_pers">Dodavanje personala</router-link> |
+    <router-link to="/nova_rez">Nova rezervacija</router-link>
   </nav>
   <router-view />
 </template>

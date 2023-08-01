@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Registracija</h1>
+    <h1>Dodavanje personala</h1>
     <div class="container">
       <div class="row">
         <div class="col-sm"></div>
@@ -32,37 +32,54 @@
                 type="email"
                 class="form-control"
                 id="exampleInputEmail1"
-                aria-describedby="emailHelp"
                 placeholder="E-mail(netko@example.com)"
               />
               <br />
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Lozinka</label>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder="Lozinka"
-              />
-              <br />
+              <div class="row">
+                <div class="col-5">
+                  <label for="ulica">Ulica</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="ulica"
+                    placeholder="Ulica"
+                  />
+                </div>
+                <div class="col-3">
+                  <label for="kbroj">Kućni broj</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="kbroj"
+                    placeholder="Kućni broj"
+                  />
+                </div>
+                <div class="col-4">
+                  <label for="pbr">Poštanski broj</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="pbr"
+                    placeholder="Poštanski broj"
+                  />
+                </div>
+              </div>
             </div>
+            <br />
             <div class="form-group">
-              <label for="exampleInputPasswordctrl">Potvrda lozinke</label>
+              <label for="satnica">Satnica</label>
               <input
-                type="password"
+                type="number"
                 class="form-control"
-                id="exampleInputPasswordctrl"
-                placeholder="Potvrda lozinke"
+                id="satnica"
+                placeholder="Satnica"
               />
             </div>
             <br />
-            <button type="submit" class="btn btn-primary">Registracija</button>
+            <button type="submit" class="btn btn-primary">Dodaj</button>
             <br />
-            <small id="emailHelp" class="form-text text-muted"
-              >Već imate račun?
-              <router-link to="/login">Prijavite se.</router-link></small
-            >
           </form>
         </div>
         <div class="col-sm"></div>
