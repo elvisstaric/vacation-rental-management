@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <pocetna-bttn v-for="opcija in opcije" :key="opcija.naziv" :tekst="opcija" />
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import PocetnaBttn from "@/components/Pocetna-bttn.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    PocetnaBttn,
+  },
+  data() {
+    return {
+      opcije: [
+        { naziv: "Moji objekti", link: "/moji_objekti" },
+        { naziv: "Personal", link: "/personal" },
+        { naziv: "Financije", link: "/financije" },
+      ],
+    };
   },
 };
 </script>
