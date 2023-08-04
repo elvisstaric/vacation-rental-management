@@ -7,26 +7,30 @@
         <div class="col-sm">
           <form>
             <div class="form-group">
-              <label for="exampleInputEmail1">Email</label>
+              <label for="elmail">Email</label>
               <input
                 type="email"
+                v-model="email"
                 class="form-control"
-                id="exampleInputEmail1"
+                id="email"
                 placeholder="E-mail(netko@example.com)"
               />
               <br />
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Lozinka</label>
+              <label for="password">Lozinka</label>
               <input
                 type="password"
+                v-model="password"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="password"
                 placeholder="Lozinka"
               />
             </div>
             <br />
-            <button type="submit" class="btn btn-primary">Prijava</button>
+            <button type="button" @click="prijava" class="btn btn-primary">
+              Prijava
+            </button>
             <br />
             <small id="emailHelp" class="form-text text-muted"
               >Nemate račun?
@@ -41,3 +45,29 @@
     </div>
   </div>
 </template>
+
+<script>
+import { firebase } from "@/firebase";
+export default {
+  name: "Prijava",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    prijava() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((rez) => {
+          this.$router.replace("/");
+        })
+        .catch((error) => {
+          console.error("Greška", error);
+        });
+    },
+  },
+};
+</script>
