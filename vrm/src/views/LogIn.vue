@@ -61,9 +61,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then((rez) => {
-          this.$router.replace("/");
-        })
+        .then((rez) => {})
         .catch((error) => {
           console.error("Greška", error);
         });

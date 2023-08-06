@@ -11,7 +11,8 @@ var firebaseConfig = {
   appId: "1:897698888821:web:bdc3b380e9a5c0c1014c3c",
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export { firebase };
+let baza = firebase.firestore();
+
+export { firebase, baza };

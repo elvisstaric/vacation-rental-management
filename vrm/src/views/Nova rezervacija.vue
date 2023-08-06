@@ -10,6 +10,7 @@
               <label for="nositelj">Ime nositelja</label>
               <input
                 type="text"
+                v-model="rezNositelj"
                 class="form-control"
                 id="nositelj"
                 placeholder="Ime nositelja"
@@ -22,6 +23,7 @@
                   <label for="datum_od">Rezervacija od</label>
                   <input
                     type="date"
+                    v-model="rezOd"
                     class="form-control"
                     id="datum_od"
                     placeholder="Rezervacija od"
@@ -31,6 +33,7 @@
                   <label for="datum_do">Rezervacija do</label>
                   <input
                     type="date"
+                    v-model="rezDo"
                     class="form-control"
                     id="datum_do"
                     placeholder="Rezervacija do"
@@ -46,9 +49,10 @@
                 <input
                   class="form-check-input"
                   type="radio"
+                  v-model="rezNaplata"
                   name="inlineRadioOptions"
                   id="opcija-u_cijelosti"
-                  value="opcija-u_cijelosti"
+                  value="U cijelosti"
                 />
                 <label class="form-check-label" for="opcija-u_cijelosti"
                   >Plaćeno</label
@@ -58,9 +62,10 @@
                 <input
                   class="form-check-input"
                   type="radio"
+                  v-model="rezNaplata"
                   name="inlineRadioOptions"
                   id="opcija-predujam"
-                  value="opcija-predujam"
+                  value="Predujam"
                 />
                 <label class="form-check-label" for="opcija-predujam"
                   >Plaćen predujam</label
@@ -70,9 +75,10 @@
                 <input
                   class="form-check-input"
                   type="radio"
+                  v-model="rezNaplata"
                   name="inlineRadioOptions"
                   id="opcija-nije_naplaceno"
-                  value="opcija-nije_naplaceno"
+                  value="Nije naplaćeno"
                 />
                 <label class="form-check-label" for="opcija-nije_naplaceno"
                   >Nije plaćeno
@@ -85,6 +91,7 @@
               <input
                 type="number"
                 step="0.01"
+                v-model="rezIznos"
                 class="form-control"
                 id="iznos"
                 placeholder="Iznos"
@@ -92,7 +99,9 @@
               <br />
             </div>
             <br />
-            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <button type="button" @click="dodajRez()" class="btn btn-primary">
+              Dodaj
+            </button>
             <br />
           </form>
         </div>
@@ -101,3 +110,45 @@
     </div>
   </div>
 </template>
+
+<script>
+import { baza } from "@/firebase";
+export default {
+  name: "",
+  data: function () {
+    return {
+      rezNositelj: "",
+      rezOd: "",
+      rezDo: "",
+      rezNaplata: "",
+      rezIznos: "",
+    };
+  },
+  methods: {
+    dodajRez() {
+      baza
+        .collection("rezervacije")
+        .add({
+          nositelj: this.rezNositelj,
+          rezervacija_od: this.rezOd,
+          rezervacija_do: this.rezDo,
+          naplata: this.rezNaplata,
+          iznos: this.rezIznos,
+        })
+        .then((spremljeno) => {
+          console.log("Spremljeno", spremljeno);
+          this.rezNositelj = "";
+          this.rezOd = "";
+          this.rezDo = "";
+          this.rezNaplata = "";
+          this.rezIznos = "";
+
+          /* this.$router.push("Ovo ce voditi na stanicu objekta");  */
+        })
+        .catch((greska) => {
+          console.error("Greška", greska);
+        });
+    },
+  },
+};
+</script>

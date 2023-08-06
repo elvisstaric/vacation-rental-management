@@ -45,12 +45,22 @@ import store from "@/store";
 import router from "@/router";
 
 firebase.auth().onAuthStateChanged((user) => {
+  const ruta = router.currentRoute;
+
   if (user) {
     console.log("*** User", user.email);
     store.korisnik = user.email;
+
+    if (!ruta.value.meta.needsUser) {
+      router.push("/");
+    }
   } else {
     console.log("*** No user");
     store.korisnik = null;
+
+    if (ruta.value.meta.needsUser) {
+      router.push("/login");
+    }
   }
 });
 

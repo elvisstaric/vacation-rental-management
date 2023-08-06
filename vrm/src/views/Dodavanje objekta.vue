@@ -9,7 +9,8 @@
             <div class="form-group">
               <label for="naziv_obj">Naziv</label>
               <input
-                type="naziv_obj"
+                type="text"
+                v-model="objNaziv"
                 class="form-control"
                 id="naziv_obj"
                 placeholder="Naziv"
@@ -17,14 +18,38 @@
               <br />
             </div>
             <div class="form-group">
-              <label for="adresa_obj">Adresa</label>
-              <input
-                type="adresa_obj"
-                class="form-control"
-                id="adresa_obj"
-                placeholder="Adresa"
-              />
-              <br />
+              <div class="row">
+                <div class="col-5">
+                  <label for="ulica">Ulica</label>
+                  <input
+                    type="text"
+                    v-model="objUlica"
+                    class="form-control"
+                    id="ulica"
+                    placeholder="Ulica"
+                  />
+                </div>
+                <div class="col-3">
+                  <label for="kbroj">Kućni broj</label>
+                  <input
+                    type="number"
+                    v-model="objKbr"
+                    class="form-control"
+                    id="kbroj"
+                    placeholder="Kućni broj"
+                  />
+                </div>
+                <div class="col-4">
+                  <label for="pbr">Poštanski broj</label>
+                  <input
+                    type="number"
+                    v-model="objPbr"
+                    class="form-control"
+                    id="pbr"
+                    placeholder="Poštanski broj"
+                  />
+                </div>
+              </div>
             </div>
             <label for="vrsta_obj">Vrsta</label>
             <div class="form-group">
@@ -32,9 +57,10 @@
                 <input
                   class="form-check-input"
                   type="radio"
+                  v-model="objVrsta"
                   name="inlineRadioOptions"
                   id="opcija-kuca"
-                  value="opcija-kuca"
+                  value="Kuća za odmor"
                 />
                 <label class="form-check-label" for="opcija-kuca"
                   >Kuća za odmor</label
@@ -44,9 +70,10 @@
                 <input
                   class="form-check-input"
                   type="radio"
+                  v-model="objVrsta"
                   name="inlineRadioOptions"
                   id="opcija-app"
-                  value="opcija-app"
+                  value="Apartman"
                 />
                 <label class="form-check-label" for="opcija-app"
                   >Apartman</label
@@ -59,6 +86,7 @@
               <label for="kapacitet_obj">Kapacitet</label>
               <input
                 type="number"
+                v-model="objKapacitet"
                 class="form-control"
                 id="kapacitet_obj"
                 placeholder="Kapacitet"
@@ -66,7 +94,13 @@
               <br />
             </div>
 
-            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <button
+              type="button"
+              @click="dodajObjekt()"
+              class="btn btn-primary"
+            >
+              Dodaj
+            </button>
           </form>
         </div>
         <div class="col-sm"></div>
@@ -74,3 +108,47 @@
     </div>
   </div>
 </template>
+
+<script>
+import { baza } from "@/firebase";
+export default {
+  name: "",
+  data: function () {
+    return {
+      objNaziv: "",
+      objUlica: "",
+      objKbr: "",
+      objPbr: "",
+      objVrsta: "",
+      objKapacitet: "",
+    };
+  },
+  methods: {
+    dodajObjekt() {
+      baza
+        .collection("objekti")
+        .add({
+          objekt: this.objNaziv,
+          ulica: this.objUlica,
+          kucni_broj: this.objKbr,
+          post_broj: this.objPbr,
+          vrsta: this.objVrsta,
+          kapacitet: this.objKapacitet,
+        })
+        .then((spremljeno) => {
+          console.log("Spremljeno", spremljeno);
+          this.objNaziv = "";
+          this.objUlica = "";
+          this.objKbr = "";
+          this.objPbr = "";
+          this.objVrsta = "";
+          this.objKapacitet = "";
+          this.$router.push("/moji_objekti");
+        })
+        .catch((greska) => {
+          console.error("Greška", greska);
+        });
+    },
+  },
+};
+</script>

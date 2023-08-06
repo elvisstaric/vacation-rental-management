@@ -10,6 +10,7 @@
               <label for="ime">Ime</label>
               <input
                 type="text"
+                v-model="persIme"
                 class="form-control"
                 id="ime"
                 placeholder="Ime"
@@ -20,6 +21,7 @@
               <label for="prezime">Prezime</label>
               <input
                 type="text"
+                v-model="persPrezime"
                 class="form-control"
                 id="prezime"
                 placeholder="Prezime"
@@ -30,6 +32,7 @@
               <label for="exampleInputEmail1">Email</label>
               <input
                 type="email"
+                v-model="persEmail"
                 class="form-control"
                 id="exampleInputEmail1"
                 placeholder="E-mail(netko@example.com)"
@@ -42,6 +45,7 @@
                   <label for="ulica">Ulica</label>
                   <input
                     type="text"
+                    v-model="persUlica"
                     class="form-control"
                     id="ulica"
                     placeholder="Ulica"
@@ -51,6 +55,7 @@
                   <label for="kbroj">Kućni broj</label>
                   <input
                     type="number"
+                    v-model="persKbr"
                     class="form-control"
                     id="kbroj"
                     placeholder="Kućni broj"
@@ -60,6 +65,7 @@
                   <label for="pbr">Poštanski broj</label>
                   <input
                     type="number"
+                    v-model="persPbr"
                     class="form-control"
                     id="pbr"
                     placeholder="Poštanski broj"
@@ -72,13 +78,20 @@
               <label for="satnica">Satnica</label>
               <input
                 type="number"
+                v-model="persSatnica"
                 class="form-control"
                 id="satnica"
                 placeholder="Satnica"
               />
             </div>
             <br />
-            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <button
+              type="button"
+              @click="dodajPersonal()"
+              class="btn btn-primary"
+            >
+              Dodaj
+            </button>
             <br />
           </form>
         </div>
@@ -87,3 +100,50 @@
     </div>
   </div>
 </template>
+
+<script>
+import { baza } from "@/firebase";
+export default {
+  name: "",
+  data: function () {
+    return {
+      persIme: "",
+      persPrezime: "",
+      persEmail: "",
+      persUlica: "",
+      persKbr: "",
+      persPbr: "",
+      persSatnica: "",
+    };
+  },
+  methods: {
+    dodajPersonal() {
+      baza
+        .collection("personal")
+        .add({
+          ime: this.persIme,
+          prezime: this.persPrezime,
+          e_mail: this.persEmail,
+          ulica: this.persUlica,
+          kucni_broj: this.persKbr,
+          post_broj: this.persPbr,
+          satnica: this.persSatnica,
+        })
+        .then((spremljeno) => {
+          console.log("Spremljeno", spremljeno);
+          this.persIme = "";
+          this.persPrezime = "";
+          this.persEmail = "";
+          this.persUlica = "";
+          this.persKbr = "";
+          this.persPbr = "";
+          this.persSatnica = "";
+          this.$router.push("/personal");
+        })
+        .catch((greska) => {
+          console.error("Greška", greska);
+        });
+    },
+  },
+};
+</script>
