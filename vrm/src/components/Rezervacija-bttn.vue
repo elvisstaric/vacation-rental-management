@@ -1,11 +1,11 @@
 <template>
   <div class="row">
     <button
-      @click="otvoriOsobu()"
+      @click="otvoriRez()"
       type="button"
       class="btn btn-primary btn-lg btn-block"
     >
-      {{ osobe.ime }} {{ osobe.prezime }}
+      {{ info.naziv }}
     </button>
     <br />
   </div>
@@ -13,11 +13,11 @@
 
 <script>
 export default {
-  name: "PersonalBttn",
-  props: ["osobe"],
+  name: "ObjektBttn",
+  props: ["info"],
   methods: {
-    otvoriOsobu() {
-      this.$router.push({ path: `personal/osoba/${this.osobe.id}` });
+    otvoriObj() {
+      this.$router.push({ path: `moji_objekti/objekt/${this.info.id}` });
     },
   },
 };

@@ -1,11 +1,11 @@
 <template>
   <div class="row">
     <button
-      @click="otvoriOsobu()"
+      @click="preusmjeri()"
       type="button"
       class="btn btn-primary btn-lg btn-block"
     >
-      {{ osobe.ime }} {{ osobe.prezime }}
+      {{ tekst.naziv }}
     </button>
     <br />
   </div>
@@ -13,11 +13,14 @@
 
 <script>
 export default {
-  name: "PersonalBttn",
-  props: ["osobe"],
+  name: "ObjektBttn",
+  props: ["tekst"],
   methods: {
-    otvoriOsobu() {
-      this.$router.push({ path: `personal/osoba/${this.osobe.id}` });
+    preusmjeri() {
+      let poveznica = String(this.tekst.link);
+      this.$router.push({
+        path: `${this.$route.params.id}/rezervacije${poveznica}`,
+      });
     },
   },
 };

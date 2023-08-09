@@ -1,6 +1,10 @@
 <template>
   <div class="row">
-    <button type="button" class="btn btn-primary btn-lg btn-block">
+    <button
+      @click="otvoriObj()"
+      type="button"
+      class="btn btn-primary btn-lg btn-block"
+    >
       {{ info.naziv }}
     </button>
     <br />
@@ -11,6 +15,11 @@
 export default {
   name: "ObjektBttn",
   props: ["info"],
+  methods: {
+    otvoriObj() {
+      this.$router.push({ path: `moji_objekti/objekt/${this.info.id}` });
+    },
+  },
 };
 </script>
 

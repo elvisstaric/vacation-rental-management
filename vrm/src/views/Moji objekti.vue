@@ -1,45 +1,80 @@
 <template>
   <objekt-bttn v-for="objekt in info" :key="objekt" :info="objekt" />
+  <div
+    class="form-group"
+    style="margin-top: 12%; float: right; position: relative"
+  >
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button
+        type="button"
+        @click="dodajObj()"
+        class="btn btn-primary btn-md"
+        id="bttnDesno"
+      >
+        +
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import ObjektBttn from "@/components/Objekt-bttn.vue";
+import { baza } from "@/firebase";
 
 export default {
   name: "Moji objekti",
   components: {
     ObjektBttn,
   },
+
   data() {
     return {
-      info: [
-        {
-          naziv: "Prvi objekt",
-          ulica: "Ulica",
-          kucni_br: "1",
-          pbr: "12345",
-          vrsta: "Kuća",
-          kapacitet: "8",
-        },
-        {
-          naziv: "Drugi objekt",
-          ulica: "Ulica",
-          kucni_br: "2",
-          pbr: "54321",
-          vrsta: "App",
-          kapacitet: "3",
-        },
-        {
-          naziv: "Treći objekt",
-          ulica: "Ulica",
-          kucni_br: "3",
-          pbr: "11223",
-          vrsta: "Kuća",
-          kapacitet: "5",
-        },
-      ],
+      info: [],
     };
+  },
+  mounted() {
+    this.dohvatiObj();
+  },
+  methods: {
+    dodajObj() {
+      this.$router.push("/dodaj_objekt");
+    },
+    dohvatiObj() {
+      let info = [];
+
+      baza
+        .collection("objekti")
+        .orderBy("objekt", "asc")
+        .get()
+        .then((rez) => {
+          rez.forEach((doc) => {
+            const podatci = doc.data();
+            let objekt = {
+              id: doc.id,
+              naziv: podatci.objekt,
+              ulica: podatci.ulica,
+              kucni_br: podatci.kucni_broj,
+              pbr: podatci.post_broj,
+              vrsta: podatci.vrsta,
+              kapacitet: podatci.kapacitet,
+            };
+
+            this.info.push(objekt);
+          });
+        });
+    },
   },
 };
 </script>
+<style scoped lang="css">
+#bttnDesno {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  font-size: 30px;
+  font-weight: bold;
+  width: 60px;
+  height: 60px;
+}
+</style>

@@ -62,8 +62,9 @@ const routes = [
       ),
   },
   {
-    path: "/nova_rez",
+    path: "/moji_objekti/objekt/:id/rezervacije/nova_rez",
     name: "nova_rez",
+    props: true,
     meta: {
       needsUser: true,
     },
@@ -87,7 +88,7 @@ const routes = [
   },
   {
     path: "/personal",
-    name: "perosnal",
+    name: "personal",
     meta: {
       needsUser: true,
     },
@@ -96,6 +97,38 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Personal.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id",
+    props: true,
+    name: "objekt",
+
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Objekt.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/rezervacije",
+    props: true,
+    name: "rezervacije",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Rezervacije.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/rezervacija/:id_rez",
+    props: true,
+    name: "rezervacija",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Rezervacija.vue"),
+  },
+  {
+    path: "/personal/osoba/:id",
+    props: true,
+    name: "Osoba",
+    component: () =>
+      import(
+        /* webpackChunkName: "about"*/
+        "../views/Osoba.vue"
+      ),
   },
 ];
 

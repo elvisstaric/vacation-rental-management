@@ -115,8 +115,10 @@
 import { baza } from "@/firebase";
 export default {
   name: "",
+
   data: function () {
     return {
+      id: this.$route.params.id,
       rezNositelj: "",
       rezOd: "",
       rezDo: "",
@@ -124,11 +126,13 @@ export default {
       rezIznos: "",
     };
   },
+
   methods: {
     dodajRez() {
       baza
         .collection("rezervacije")
         .add({
+          objekt_id: this.id,
           nositelj: this.rezNositelj,
           rezervacija_od: this.rezOd,
           rezervacija_do: this.rezDo,
@@ -137,13 +141,16 @@ export default {
         })
         .then((spremljeno) => {
           console.log("Spremljeno", spremljeno);
+          this.objekt_id = "";
           this.rezNositelj = "";
           this.rezOd = "";
           this.rezDo = "";
           this.rezNaplata = "";
           this.rezIznos = "";
 
-          /* this.$router.push("Ovo ce voditi na stanicu objekta");  */
+          this.$router.push({
+            path: `/moji_objekti/objekt/${this.$route.params.id}`,
+          });
         })
         .catch((greska) => {
           console.error("Greška", greska);
