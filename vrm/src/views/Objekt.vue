@@ -6,6 +6,13 @@
       :key="opcija.naziv"
       :tekst="opcija"
     />
+    <button
+      type="button"
+      @click="obrisiObj()"
+      class="btn btn-primary btn-lg btn-block"
+    >
+      Obriši
+    </button>
   </div>
 </template>
 <script>
@@ -19,7 +26,7 @@ export default {
   data() {
     return {
       opcije: [
-        { naziv: "Rezervacije", link: "/nova_rez" },
+        { naziv: "Rezervacije", link: "/rezervacije" },
         { naziv: "Čišćenja", link: "/ciscenja" },
         { naziv: "Održavanja", link: "/odrzavanja" },
       ],
@@ -30,6 +37,19 @@ export default {
     this.dohvatiObj();
   },
   methods: {
+    obrisiObj() {
+      baza
+        .collection("objekti")
+        .doc(this.id)
+        .delete()
+        .then(() => {
+          console.log("Obrisano");
+          this.$router.push("/moji_objekti/");
+        })
+        .catch((error) => {
+          console.error("Greška ", error);
+        });
+    },
     dohvatiObj() {
       let objekt = [];
       baza

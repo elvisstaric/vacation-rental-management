@@ -35,6 +35,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Registracija.vue"),
   },
+
   {
     path: "/dodaj_objekt",
     name: "dodaj_objekt",
@@ -114,7 +115,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Rezervacije.vue"),
   },
   {
-    path: "/moji_objekti/objekt/:id/rezervacija/:id_rez",
+    path: "/moji_objekti/objekt/:id/rezervacije/:id_rez",
     props: true,
     name: "rezervacija",
     component: () =>
@@ -123,12 +124,54 @@ const routes = [
   {
     path: "/personal/osoba/:id",
     props: true,
-    name: "Osoba",
+    name: "osoba",
     component: () =>
       import(
         /* webpackChunkName: "about"*/
         "../views/Osoba.vue"
       ),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/ciscenja",
+    props: true,
+    name: "ciscenja",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Čišćenja.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/ciscenja/:id_ciscenje",
+    props: true,
+    name: "ciscenje",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Čišćenje.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/ciscenja/dodaj_ciscenje",
+    props: true,
+    name: "dodaj_ciscenje",
+    component: () =>
+      import(/* webpackChunkName: "about"*/ "../views/Dodaj čišćenje.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/odrzavanja",
+    props: true,
+    name: "odrzavanja",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Održavanja.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/odrzavanja/:id_odrzavanje",
+    props: true,
+    name: "odrzavanje",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Održavanje.vue"),
+  },
+  {
+    path: "/moji_objekti/objekt/:id/odrzavanja/dodaj_odrzavanje",
+    props: true,
+    name: "dodaj_odrzavanje",
+    component: () =>
+      import(/* webpackChunkName: "about"*/ "../views/Dodaj održavanje.vue"),
   },
 ];
 

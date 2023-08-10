@@ -149,7 +149,7 @@ export default {
           this.rezIznos = "";
 
           this.$router.push({
-            path: `/moji_objekti/objekt/${this.$route.params.id}`,
+            path: `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`,
           });
         })
         .catch((greska) => {

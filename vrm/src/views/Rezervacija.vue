@@ -8,18 +8,18 @@
           <form>
             <div class="form-group">
               <label for="nositelj">Ime nositelja</label>
-              <p>Nositelj</p>
+              <p>{{ rezervacija.nositelj }}</p>
               <br />
             </div>
             <div class="form-group">
               <div class="row">
                 <div class="col-6">
                   <label for="datum_od">Rezervacija od</label>
-                  <p>Od</p>
+                  <p>{{ rezervacija.rezervacija_od }}</p>
                 </div>
                 <div class="col-6">
                   <label for="datum_do">Rezervacija do</label>
-                  <p>Do</p>
+                  <p>{{ rezervacija.rezervacija_do }}</p>
                 </div>
               </div>
             </div>
@@ -28,17 +28,19 @@
             <br />
             <div class="form-group">
               <div class="form-check form-check-inline">
-                <p>Status</p>
+                <p>{{ rezervacija.naplata }}</p>
               </div>
             </div>
             <br />
             <div class="form-group">
               <label for="iznos">Iznos</label>
-              <p>Iznos</p>
+              <p>{{ rezervacija.iznos }}</p>
               <br />
             </div>
             <br />
-            <button type="button" class="btn btn-primary">Dodaj</button>
+            <button type="button" @click="obrisiRez()" class="btn btn-primary">
+              Obriši
+            </button>
             <br />
           </form>
         </div>
@@ -47,3 +49,57 @@
     </div>
   </div>
 </template>
+
+<script>
+import { baza } from "@/firebase";
+
+export default {
+  name: "",
+  props: ["id_rez"],
+  data() {
+    return { rezervacija: [] };
+  },
+  mounted() {
+    this.dohvatiRezervaciju();
+  },
+  methods: {
+    obrisiRez() {
+      baza
+        .collection("rezervacije")
+        .doc(this.id_rez)
+        .delete()
+        .then(() => {
+          console.log("Obrisano");
+          this.$router.push(
+            `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`
+          );
+        })
+        .catch((error) => {
+          console.error("Greška ", error);
+        });
+    },
+    dohvatiRezervaciju() {
+      let rezervacija = [];
+      baza
+        .collection("rezervacije")
+        .doc(this.id_rez)
+        .get()
+        .then((rez) => {
+          this.rezervacija = rez.data();
+          this.rezervacija.id = this.id_rez;
+        });
+    },
+  },
+};
+</script>
+<style scoped lang="scss">
+label {
+  font-weight: bold;
+}
+p {
+  margin: auto;
+}
+.row {
+  margin: auto;
+}
+</style>

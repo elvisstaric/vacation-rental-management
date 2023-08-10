@@ -43,7 +43,9 @@
               <p>{{ osoba.satnica }}</p>
             </div>
             <br />
-            <button type="button" class="btn btn-primary">Dodaj</button>
+            <button type="button" @click="obrisiPers()" class="btn btn-primary">
+              Obriši
+            </button>
             <br />
           </form>
         </div>
@@ -66,6 +68,19 @@ export default {
     this.dohvatiOsobu();
   },
   methods: {
+    obrisiPers() {
+      baza
+        .collection("personal")
+        .doc(this.id)
+        .delete()
+        .then(() => {
+          console.log("Obrisano");
+          this.$router.push("/personal");
+        })
+        .catch((error) => {
+          console.error("Greška ", error);
+        });
+    },
     dohvatiOsobu() {
       let osoba = [];
       baza

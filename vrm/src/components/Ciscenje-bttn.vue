@@ -1,11 +1,11 @@
 <template>
   <div class="row">
     <button
-      @click="otvoriRez()"
+      @click="preusmjeri()"
       type="button"
       class="btn btn-primary btn-lg btn-block"
     >
-      {{ info.naziv }}
+      {{ info.datum }}
     </button>
     <br />
   </div>
@@ -13,11 +13,13 @@
 
 <script>
 export default {
-  name: "ObjektBttn",
+  name: "CiscenjeBttn",
   props: ["info"],
   methods: {
-    otvoriObj() {
-      this.$router.push({ path: `moji_objekti/objekt/${this.info.id}` });
+    preusmjeri() {
+      this.$router.push({
+        path: `${this.$route.name}/${this.info.id}`,
+      });
     },
   },
 };

@@ -5,7 +5,7 @@
       type="button"
       class="btn btn-primary btn-lg btn-block"
     >
-      {{ tekst.naziv }}
+      {{ info.nositelj }}
     </button>
     <br />
   </div>
@@ -13,13 +13,12 @@
 
 <script>
 export default {
-  name: "ObjektBttn",
-  props: ["tekst"],
+  name: "RezervacijaBttn",
+  props: ["info"],
   methods: {
     preusmjeri() {
-      let poveznica = String(this.tekst.link);
       this.$router.push({
-        path: `${this.$route.params.id}${poveznica}`,
+        path: `${this.$route.name}/${this.info.id}`,
       });
     },
   },

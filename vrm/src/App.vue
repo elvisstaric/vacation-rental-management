@@ -10,7 +10,7 @@
     >
     | <router-link to="/dodaj_objekt">Dodavanje objekta</router-link> |
     <router-link to="/dodaj_pers">Dodavanje personala</router-link> |
-    <!-- <router-link to="/nova_rez">Nova rezervacija</router-link> | -->
+    <!-- <router-link to="/dodaj_odrzavanje">odrz</router-link> | -->
 
     <a v-if="store.korisnik" href="#" @click.prevent="odjava()">Odjava </a>
   </nav>

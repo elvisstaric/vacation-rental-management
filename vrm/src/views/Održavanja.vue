@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1>Rezervacije</h1>
-    <rezervacije-bttn
-      v-for="rezervacija in rezervacije"
-      :key="rezervacija.id"
-      :info="rezervacija"
+    <h1>Održavanja</h1>
+    <odrzavanje-bttn
+      v-for="odrzavanje in odrzavanja"
+      :key="odrzavanje.id"
+      :info="odrzavanje"
     />
     <div
       class="form-group"
@@ -13,7 +13,7 @@
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <button
           type="button"
-          @click="dodajRez()"
+          @click="dodajOdrzavanje()"
           class="btn btn-primary btn-md"
           id="bttnDesno"
         >
@@ -24,42 +24,42 @@
   </div>
 </template>
 <script>
-import RezervacijeBttn from "@/components/Rezervacije-bttn.vue";
+import OdrzavanjeBttn from "@/components/Odrzavanje-bttn.vue";
 import { baza } from "@/firebase";
 
 export default {
-  components: { RezervacijeBttn },
+  components: { OdrzavanjeBttn },
   name: "",
   props: ["id"],
   data() {
     return {
-      rezervacije: [],
+      odrzavanja: [],
     };
   },
   mounted() {
-    this.dohvatiRez();
+    this.dohvatiOdrzavanja();
   },
   methods: {
-    dodajRez() {
-      this.$router.push(`${this.$route.name}/nova_rez`);
+    dodajOdrzavanje() {
+      this.$router.push(`${this.$route.name}/dodaj_odrzavanje`);
     },
-    dohvatiRez() {
-      let rezervacije = [];
+    dohvatiOdrzavanja() {
+      let odrzavanja = [];
       let id_obj = this.$route.params.id;
 
       baza
-        .collection("rezervacije")
+        .collection("odrzavanja")
         .where("objekt_id", "==", id_obj)
         .get()
         .then((rez) => {
           rez.forEach((doc) => {
             const podatci = doc.data();
-            let rezervacija = {
+            let odrzavanje = {
               id: doc.id,
-              nositelj: podatci.nositelj,
+              naziv: podatci.naziv,
             };
 
-            this.rezervacije.push(rezervacija);
+            this.odrzavanja.push(odrzavanje);
           });
         });
     },
