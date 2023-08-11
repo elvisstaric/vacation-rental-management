@@ -14,6 +14,16 @@
                 class="form-control"
                 id="datum"
               />
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="trajanje">Trajanje čišćenja</label>
+              <input
+                type="number"
+                v-model="trajanje"
+                class="form-control"
+                id="trajanje"
+              />
               <br />
             </div>
             <div class="form-group">
@@ -60,6 +70,7 @@ export default {
   data() {
     return {
       datum: "",
+      trajanje: "",
       id_obj: this.$route.params.id,
       personal: [],
       osobe: [],
@@ -75,11 +86,13 @@ export default {
         .add({
           objekt_id: this.id_obj,
           datum: this.datum,
+          trajanje: this.trajanje,
           personal: this.personal,
         })
         .then((spremljeno) => {
           console.log("Spremljeno", spremljeno);
           this.datum = "";
+          this.trajanje = "";
           this.personal = [];
 
           this.$router.push({

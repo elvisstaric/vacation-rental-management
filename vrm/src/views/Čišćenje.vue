@@ -3,12 +3,17 @@
     <h1>Čišćenje</h1>
     <div class="container">
       <div class="row">
-        <div class="col-sm"></div>
         <div class="col-sm">
           <form>
             <div class="form-group">
               <label for="datum">Datum</label>
               <p>{{ ciscenje.datum }}</p>
+              <br />
+            </div>
+
+            <div class="form-group">
+              <label for="trajanje">Trajanje čišćenja</label>
+              <p>{{ ciscenje.trajanje }}</p>
               <br />
             </div>
             <label for="personal">Personal</label>
@@ -19,12 +24,6 @@
                 </p>
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-check form-check-inline">
-                <p></p>
-              </div>
-            </div>
-            <br />
 
             <button
               type="button"
@@ -35,7 +34,6 @@
             </button>
           </form>
         </div>
-        <div class="col-sm"></div>
       </div>
     </div>
   </div>

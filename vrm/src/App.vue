@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
+    <router-link v-if="store.korisnik" to="/">Home</router-link>
 
     <router-link v-if="!store.korisnik" to="/login">Log In</router-link>
 
@@ -8,9 +8,9 @@
     <router-link v-if="!store.korisnik" to="/registracija"
       >Registracija</router-link
     >
-    | <router-link to="/dodaj_objekt">Dodavanje objekta</router-link> |
-    <router-link to="/dodaj_pers">Dodavanje personala</router-link> |
-    <!-- <router-link to="/dodaj_odrzavanje">odrz</router-link> | -->
+    <!--| <router-link to="/dodaj_objekt">Dodavanje objekta</router-link> |
+     <router-link to="/dodaj_pers">Dodavanje personala</router-link> |
+    <router-link to="/financije">fin</router-link> | -->
 
     <a v-if="store.korisnik" href="#" @click.prevent="odjava()">Odjava </a>
   </nav>

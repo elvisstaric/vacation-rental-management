@@ -173,6 +173,26 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about"*/ "../views/Dodaj održavanje.vue"),
   },
+  {
+    path: "/financije",
+    name: "financije",
+    component: () =>
+      import(/* webpackChunkName: "about"*/ "../views/Financije.vue"),
+  },
+  {
+    path: "/financije/financije_objekti",
+
+    name: "financije_objekti",
+    component: () =>
+      import(/* webpackChunkName: "about"*/ "../views/Financije objekti.vue"),
+  },
+  {
+    path: "/financije/financije_personal",
+
+    name: "financije_personal",
+    component: () =>
+      import(/* webpackChunkName: "about"*/ "../views/Financije personal.vue"),
+  },
 ];
 
 const router = createRouter({
