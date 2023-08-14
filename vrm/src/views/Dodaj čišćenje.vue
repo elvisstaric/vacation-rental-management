@@ -22,6 +22,7 @@
                 type="number"
                 v-model="trajanje"
                 class="form-control"
+                placeholder="Trajanje čišćenja"
                 id="trajanje"
               />
               <br />

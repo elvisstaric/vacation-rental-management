@@ -8,41 +8,87 @@
           <form>
             <div class="form-group">
               <label for="ime">Ime</label>
-              <p>{{ osoba.ime }}</p>
+              <input
+                type="text"
+                v-model="osoba.ime"
+                class="form-control"
+                id="ime"
+                placeholder="Ime"
+              />
             </div>
             <br />
             <div class="form-group">
               <label for="prezime">Prezime</label>
-              <p>{{ osoba.prezime }}</p>
+              <input
+                type="text"
+                v-model="osoba.prezime"
+                class="form-control"
+                id="prezime"
+                placeholder="Prezime"
+              />
             </div>
             <br />
             <div class="form-group">
               <label for="exampleInputEmail1">Email</label>
-              <p>{{ osoba.e_mail }}</p>
+              <input
+                type="email"
+                v-model="osoba.e_mail"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="E-mail(netko@example.com)"
+              />
               <br />
             </div>
             <div class="form-group">
               <div class="row">
                 <div class="col-5">
                   <label for="ulica">Ulica</label>
-                  <p>{{ osoba.ulica }}</p>
+                  <input
+                    type="text"
+                    v-model="osoba.ulica"
+                    class="form-control"
+                    id="ulica"
+                    placeholder="Ulica"
+                  />
                 </div>
                 <div class="col-3">
-                  <label for="kbroj">{{ osoba.kucni_broj }}</label>
-                  <p>6</p>
+                  <label for="kbroj">Kućni broj</label>
+                  <input
+                    type="number"
+                    v-model="osoba.kucni_broj"
+                    class="form-control"
+                    id="kbroj"
+                    placeholder="Kućni broj"
+                  />
                 </div>
                 <div class="col-4">
                   <label for="pbr">Poštanski broj</label>
-                  <p>{{ osoba.post_broj }}</p>
+                  <input
+                    type="number"
+                    v-model="osoba.post_broj"
+                    class="form-control"
+                    id="pbr"
+                    placeholder="Poštanski broj"
+                  />
                 </div>
               </div>
             </div>
             <br />
             <div class="form-group">
               <label for="satnica">Satnica</label>
-              <p>{{ osoba.satnica }}</p>
+              <input
+                type="number"
+                step="0.01"
+                v-model="osoba.satnica"
+                class="form-control"
+                id="satnica"
+                placeholder="Satnica"
+              />
             </div>
             <br />
+            <button type="button" @click="urediPers()" class="btn btn-primary">
+              Spremi
+            </button>
             <button type="button" @click="obrisiPers()" class="btn btn-primary">
               Obriši
             </button>
@@ -81,6 +127,27 @@ export default {
           console.error("Greška ", error);
         });
     },
+    urediPers() {
+      baza
+        .collection("personal")
+        .doc(this.id)
+        .update({
+          ime: this.osoba.ime,
+          prezime: this.osoba.prezime,
+          e_mail: this.osoba.e_mail,
+          ulica: this.osoba.ulica,
+          kucni_broj: this.osoba.kucni_broj,
+          post_broj: this.osoba.post_broj,
+          satnica: this.osoba.satnica,
+        })
+        .then(() => {
+          console.log("Spremljeno");
+          this.$router.push(`/personal`);
+        })
+        .catch((error) => {
+          console.error("Greška ", error);
+        });
+    },
     dohvatiOsobu() {
       let osoba = [];
       baza
@@ -102,7 +169,10 @@ label {
 p {
   margin: auto;
 }
-.row {
-  margin: auto;
+.form-group {
+  width: 400px;
+}
+button {
+  margin-left: 20px;
 }
 </style>

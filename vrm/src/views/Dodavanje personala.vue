@@ -78,6 +78,7 @@
               <label for="satnica">Satnica</label>
               <input
                 type="number"
+                step="0.01"
                 v-model="persSatnica"
                 class="form-control"
                 id="satnica"

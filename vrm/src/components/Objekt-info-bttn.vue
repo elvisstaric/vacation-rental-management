@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "ObjektBttn",
+  name: "ObjektInfoBttn",
   props: ["tekst"],
   methods: {
     preusmjeri() {

@@ -7,24 +7,48 @@
           <form>
             <div class="form-group">
               <label for="datum">Datum</label>
-              <p>{{ ciscenje.datum }}</p>
-              <br />
+              <input
+                type="date"
+                v-model="ciscenje.datum"
+                class="form-control"
+                id="datum"
+              />
             </div>
-
+            <br />
             <div class="form-group">
               <label for="trajanje">Trajanje čišćenja</label>
-              <p>{{ ciscenje.trajanje }}</p>
+              <input
+                type="number"
+                v-model="ciscenje.trajanje"
+                class="form-control"
+                id="trajanje"
+              />
               <br />
             </div>
             <label for="personal">Personal</label>
-            <div v-for="osoba_id in ciscenje.personal" :key="osoba_id">
-              <div v-for="osoba in osobe" :key="osoba" :osoba="osobe">
-                <p v-if="osoba_id == osoba.id">
-                  {{ osoba.ime }} {{ osoba.prezime }}
-                </p>
+            <div v-for="osoba in osobe" :key="osoba" :osoba="osobe">
+              <div>
+                <input
+                  type="checkbox"
+                  v-model="ciscenje.personal"
+                  :id="osoba.id"
+                  :name="osoba.ime"
+                  :value="osoba.id"
+                />
+                <label :for="osoba.id"
+                  >{{ osoba.ime }} {{ osoba.prezime }}</label
+                >
+                <br />
               </div>
             </div>
-
+            <br />
+            <button
+              type="button"
+              @click="urediCiscenje()"
+              class="btn btn-primary"
+            >
+              Spremi
+            </button>
             <button
               type="button"
               @click="obrisiCiscenje()"
@@ -60,6 +84,25 @@ export default {
         .delete()
         .then(() => {
           console.log("Obrisano");
+          this.$router.push(
+            `/moji_objekti/objekt/${this.$route.params.id}/ciscenja`
+          );
+        })
+        .catch((error) => {
+          console.error("Greška ", error);
+        });
+    },
+    urediCiscenje() {
+      baza
+        .collection("ciscenja")
+        .doc(this.id_ciscenje)
+        .update({
+          datum: this.ciscenje.datum,
+          trajanje: this.ciscenje.trajanje,
+          personal: this.ciscenje.personal,
+        })
+        .then(() => {
+          console.log("Spremljeno");
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/ciscenja`
           );
@@ -111,5 +154,9 @@ p {
 }
 .row {
   margin: auto;
+  width: 40%;
+}
+button {
+  margin-left: 20px;
 }
 </style>
