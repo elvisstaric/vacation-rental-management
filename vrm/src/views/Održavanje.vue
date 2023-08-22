@@ -17,7 +17,7 @@
               <br />
             </div>
             <div class="form-group">
-              <label for="personal">opis</label>
+              <label for="personal">Opis</label>
               <p>{{ odrzavanje.opis }}</p>
             </div>
 

@@ -43,6 +43,7 @@
 
 <script>
 import { baza } from "@/firebase";
+import store from "@/store";
 
 export default {
   name: "",
@@ -58,6 +59,7 @@ export default {
       let objekti = [];
       baza
         .collection("objekti")
+        .where("korisnik", "==", store.korisnik)
         .orderBy("objekt", "asc")
         .get()
         .then((rez) => {

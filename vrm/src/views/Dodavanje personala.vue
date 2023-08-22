@@ -104,6 +104,7 @@
 
 <script>
 import { baza } from "@/firebase";
+import store from "@/store";
 export default {
   name: "",
   data: function () {
@@ -129,6 +130,7 @@ export default {
           kucni_broj: this.persKbr,
           post_broj: this.persPbr,
           satnica: this.persSatnica,
+          korisnik: store.korisnik,
         })
         .then((spremljeno) => {
           console.log("Spremljeno", spremljeno);

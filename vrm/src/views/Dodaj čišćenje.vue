@@ -65,6 +65,7 @@
 <script>
 // @ is an alias to /src
 import { baza } from "@/firebase";
+import store from "@/store";
 export default {
   name: "Dodaj čišćenje",
 
@@ -110,6 +111,7 @@ export default {
 
       baza
         .collection("personal")
+        .where("korisnik", "==", store.korisnik)
         .orderBy("prezime", "asc")
         .get()
         .then((rez) => {

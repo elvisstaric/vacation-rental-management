@@ -29,7 +29,7 @@
 
 <script>
 import { baza } from "@/firebase";
-
+import store from "@/store";
 export default {
   name: "",
   data() {
@@ -44,6 +44,7 @@ export default {
       let personal = [];
       baza
         .collection("personal")
+        .where("korisnik", "==", store.korisnik)
         .orderBy("prezime", "asc")
         .get()
         .then((rez) => {

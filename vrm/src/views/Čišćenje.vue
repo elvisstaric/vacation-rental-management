@@ -65,6 +65,7 @@
 
 <script>
 import { baza } from "@/firebase";
+import store from "@/store";
 
 export default {
   name: "",
@@ -128,6 +129,8 @@ export default {
 
       baza
         .collection("personal")
+        .where("korisnik", "==", store.korisnik)
+        .orderBy("prezime", "asc")
         .get()
         .then((rez) => {
           rez.forEach((doc) => {

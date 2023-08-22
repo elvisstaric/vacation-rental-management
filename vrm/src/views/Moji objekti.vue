@@ -21,6 +21,7 @@
 // @ is an alias to /src
 import ObjektBttn from "@/components/Objekt-bttn.vue";
 import { baza } from "@/firebase";
+import store from "@/store";
 
 export default {
   name: "Moji objekti",
@@ -45,6 +46,7 @@ export default {
 
       baza
         .collection("objekti")
+        .where("korisnik", "==", store.korisnik)
         .orderBy("objekt", "asc")
         .get()
         .then((rez) => {

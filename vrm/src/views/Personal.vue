@@ -21,6 +21,7 @@
 // @ is an alias to /src
 import PersonalBttn from "@/components/Personal-bttn.vue";
 import { baza } from "@/firebase";
+import store from "@/store";
 export default {
   name: "Personal",
   components: {
@@ -43,6 +44,7 @@ export default {
 
       baza
         .collection("personal")
+        .where("korisnik", "==", store.korisnik)
         .orderBy("prezime", "asc")
         .get()
         .then((rez) => {
