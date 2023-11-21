@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { firebase } from "@/firebase";
+//import { firebase } from "@/firebase";
 export default {
   name: "Registracija",
   data() {
@@ -68,7 +68,7 @@ export default {
     };
   },
   methods: {
-    registracija() {
+    /*registracija() {
       if (this.password != this.passwordctrl) {
         alert("Lozinke se ne podudaraju");
       } else if (this.password == this.passwordctrl) {
@@ -79,7 +79,7 @@ export default {
             console.log(error);
           });
       }
-    },
+    },*/
   },
 };
 </script>

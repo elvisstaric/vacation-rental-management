@@ -20,7 +20,7 @@
 <script>
 // @ is an alias to /src
 import ObjektBttn from "@/components/Objekt-bttn.vue";
-import { baza } from "@/firebase";
+//import { baza } from "@/firebase";
 import store from "@/store";
 
 export default {
@@ -31,17 +31,45 @@ export default {
 
   data() {
     return {
-      info: [],
+      info: [
+        {
+          id: "1",
+          naziv: "Villa Ana",
+          ulica: "Ulica",
+          kucni_br: "1",
+          pbr: "52440",
+          vrsta: "Kuća za odmor",
+          kapacitet: "10",
+        },
+        {
+          id: "2",
+          naziv: "Villa Marija",
+          ulica: "Ulica",
+          kucni_br: "2",
+          pbr: "12345",
+          vrsta: "Kuća za odmor",
+          kapacitet: "5",
+        },
+        {
+          id: "3",
+          naziv: "Appartaments",
+          ulica: "Ulica",
+          kucni_br: "3",
+          pbr: "112233",
+          vrsta: "Apartman",
+          kapacitet: "3",
+        },
+      ],
     };
   },
-  mounted() {
+  /*mounted() {
     this.dohvatiObj();
-  },
+  },*/
   methods: {
     dodajObj() {
       this.$router.push("/dodaj_objekt");
     },
-    dohvatiObj() {
+    /* dohvatiObj() {
       let info = [];
 
       baza
@@ -65,7 +93,7 @@ export default {
             this.info.push(objekt);
           });
         });
-    },
+    },*/
   },
 };
 </script>

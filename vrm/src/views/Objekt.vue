@@ -30,11 +30,15 @@ export default {
         { naziv: "Čišćenja", link: "/ciscenja" },
         { naziv: "Održavanja", link: "/odrzavanja" },
       ],
-      objekt: [],
+      objekt: [
+        {
+          naziv: "Objekt",
+        },
+      ],
     };
   },
   mounted() {
-    this.dohvatiObj();
+    //this.dohvatiObj();
   },
   methods: {
     obrisiObj() {
@@ -50,7 +54,7 @@ export default {
           console.error("Greška ", error);
         });
     },
-    dohvatiObj() {
+    /*dohvatiObj() {
       let objekt = [];
       baza
         .collection("objekti")
@@ -60,7 +64,7 @@ export default {
           this.objekt = rez.data();
           this.objekt.id = this.id;
         });
-    },
+    },*/
   },
 };
 </script>

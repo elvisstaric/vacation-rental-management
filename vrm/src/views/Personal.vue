@@ -29,17 +29,48 @@ export default {
   },
   data() {
     return {
-      osobe: [],
+      osobe: [
+        {
+          id: 1,
+          ime: "Đuro",
+          prezime: "Đurić",
+          ulica: "Ulica2",
+          kucni_br: "1",
+          pbr: "123321",
+          email: "d.duric@proba.hr",
+          satnica: "5",
+        },
+        {
+          id: 2,
+          ime: "Kata",
+          prezime: "Katić",
+          ulica: "Ulica2",
+          kucni_br: "2",
+          pbr: "123321",
+          email: "Kata.katic@proba.hr",
+          satnica: "6",
+        },
+        {
+          id: 3,
+          ime: "Mara",
+          prezime: "Marić",
+          ulica: "Ulica3",
+          kucni_br: "3",
+          pbr: "111111",
+          email: "mara.maric@proba.hr",
+          satnica: "4",
+        },
+      ],
     };
   },
   mounted() {
-    this.dohvatiPers();
+    //this.dohvatiPers();
   },
   methods: {
     dodajPers() {
       this.$router.push("/dodaj_pers");
     },
-    dohvatiPers() {
+    /* dohvatiPers() {
       let osobe = [];
 
       baza
@@ -64,7 +95,7 @@ export default {
             this.osobe.push(osoba);
           });
         });
-    },
+    },*/
   },
 };
 </script>

@@ -25,7 +25,7 @@
 </template>
 <script>
 import RezervacijeBttn from "@/components/Rezervacije-bttn.vue";
-import { baza } from "@/firebase";
+//import { baza } from "@/firebase";
 
 export default {
   components: { RezervacijeBttn },
@@ -33,17 +33,30 @@ export default {
   props: ["id"],
   data() {
     return {
-      rezervacije: [],
+      rezervacije: [
+        {
+          id: 1,
+          nositelj: "Pero Perić",
+        },
+        {
+          id: 2,
+          nositelj: "John Doe",
+        },
+        {
+          id: 1,
+          nositelj: "Ana Anić",
+        },
+      ],
     };
   },
   mounted() {
-    this.dohvatiRez();
+    // this.dohvatiRez();
   },
   methods: {
     dodajRez() {
       this.$router.push(`${this.$route.name}/nova_rez`);
     },
-    dohvatiRez() {
+    /*dohvatiRez() {
       let rezervacije = [];
       let id_obj = this.$route.params.id;
 
@@ -62,7 +75,7 @@ export default {
             this.rezervacije.push(rezervacija);
           });
         });
-    },
+    },*/
   },
 };
 </script>

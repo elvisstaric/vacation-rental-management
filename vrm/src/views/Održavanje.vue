@@ -48,7 +48,7 @@ export default {
     return { odrzavanje: [] };
   },
   mounted() {
-    this.dohvatiOdrzavanje();
+    //this.dohvatiOdrzavanje();
   },
   methods: {
     obrisiOdrzavanje() {

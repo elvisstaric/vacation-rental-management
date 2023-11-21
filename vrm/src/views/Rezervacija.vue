@@ -129,7 +129,7 @@ export default {
     return { rezervacija: [] };
   },
   mounted() {
-    this.dohvatiRezervaciju();
+    //this.dohvatiRezervaciju();
   },
   methods: {
     obrisiRez() {
@@ -168,7 +168,7 @@ export default {
           console.error("Greška ", error);
         });
     },
-    dohvatiRezervaciju() {
+    /*dohvatiRezervaciju() {
       let rezervacija = [];
       baza
         .collection("rezervacije")
@@ -178,7 +178,7 @@ export default {
           this.rezervacija = rez.data();
           this.rezervacija.id = this.id_rez;
         });
-    },
+    },*/
   },
 };
 </script>

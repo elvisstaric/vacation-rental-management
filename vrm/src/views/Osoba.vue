@@ -111,7 +111,7 @@ export default {
     return { osoba: [] };
   },
   mounted() {
-    this.dohvatiOsobu();
+    //this.dohvatiOsobu();
   },
   methods: {
     obrisiPers() {
