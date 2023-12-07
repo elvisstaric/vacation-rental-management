@@ -1,18 +1,28 @@
 <template>
-  <nav>
-    <router-link v-if="store.korisnik" to="/">Home</router-link>
-    <router-link v-if="!store.korisnik" to="/login">Log In</router-link>
-    |
-    <router-link v-if="!store.korisnik" to="/registracija"
-      >Registracija</router-link
-    >
+  <div class="bg">
+    <nav>
+      <router-link v-if="store.korisnik" to="/">Home</router-link>
+      <router-link v-if="!store.korisnik" to="/login">Log In</router-link>
+      |
+      <router-link v-if="!store.korisnik" to="/registracija"
+        >Registracija</router-link
+      >
 
-    <a v-if="store.korisnik" href="#" @click.prevent="odjava()">Odjava </a>
-  </nav>
-  <router-view />
+      <a v-if="store.korisnik" href="#" @click.prevent="odjava()">Odjava </a>
+    </nav>
+    <router-view />
+  </div>
 </template>
 
 <style lang="scss">
+.bg {
+  background: url("./assets/pozadina.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  //filter: blur(1px);
+  //-webkit-filter: blur(1px);
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
