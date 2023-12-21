@@ -20,8 +20,9 @@
 <script>
 // @ is an alias to /src
 import ObjektBttn from "@/components/Objekt-bttn.vue";
-//import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
 import store from "@/store";
+const axios = require("axios");
 
 export default {
   name: "Moji objekti",
@@ -31,69 +32,29 @@ export default {
 
   data() {
     return {
-      info: [
-        {
-          id: "1",
-          naziv: "Villa Ana",
-          ulica: "Ulica",
-          kucni_br: "1",
-          pbr: "52440",
-          vrsta: "Kuća za odmor",
-          kapacitet: "10",
-        },
-        {
-          id: "2",
-          naziv: "Villa Marija",
-          ulica: "Ulica",
-          kucni_br: "2",
-          pbr: "12345",
-          vrsta: "Kuća za odmor",
-          kapacitet: "5",
-        },
-        {
-          id: "3",
-          naziv: "Appartaments",
-          ulica: "Ulica",
-          kucni_br: "3",
-          pbr: "112233",
-          vrsta: "Apartman",
-          kapacitet: "3",
-        },
-      ],
+      info: [],
     };
   },
-  /*mounted() {
+  mounted() {
     this.dohvatiObj();
-  },*/
+  },
   methods: {
     dodajObj() {
       this.$router.push("/dodaj_objekt");
     },
-    /* dohvatiObj() {
+    dohvatiObj() {
       let info = [];
-
-      baza
-        .collection("objekti")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("objekt", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let objekt = {
-              id: doc.id,
-              naziv: podatci.objekt,
-              ulica: podatci.ulica,
-              kucni_br: podatci.kucni_broj,
-              pbr: podatci.post_broj,
-              vrsta: podatci.vrsta,
-              kapacitet: podatci.kapacitet,
-            };
-
+      axios
+        .get(BaseUrl + `/objekt`)
+        .then((response) => {
+          for (let objekt of response.data) {
             this.info.push(objekt);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
-    },*/
+    },
   },
 };
 </script>

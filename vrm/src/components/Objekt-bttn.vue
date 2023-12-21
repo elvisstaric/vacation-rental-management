@@ -5,7 +5,7 @@
       type="button"
       class="btn btn-primary btn-lg btn-block"
     >
-      {{ info.naziv }}
+      {{ info.objekt }}
     </button>
     <br />
   </div>
