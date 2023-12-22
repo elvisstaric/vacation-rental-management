@@ -25,7 +25,8 @@
 </template>
 <script>
 import RezervacijeBttn from "@/components/Rezervacije-bttn.vue";
-//import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   components: { RezervacijeBttn },
@@ -33,49 +34,31 @@ export default {
   props: ["id"],
   data() {
     return {
-      rezervacije: [
-        {
-          id: 1,
-          nositelj: "Pero Perić",
-        },
-        {
-          id: 2,
-          nositelj: "John Doe",
-        },
-        {
-          id: 1,
-          nositelj: "Ana Anić",
-        },
-      ],
+      rezervacije: [],
     };
   },
   mounted() {
-    // this.dohvatiRez();
+    this.dohvatiRez();
   },
   methods: {
     dodajRez() {
       this.$router.push(`${this.$route.name}/nova_rez`);
     },
-    /*dohvatiRez() {
+    dohvatiRez() {
       let rezervacije = [];
-      let id_obj = this.$route.params.id;
+      let id_obj = this.$route.params.id; //dodati ovo!!!!
 
-      baza
-        .collection("rezervacije")
-        .where("objekt_id", "==", id_obj)
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let rezervacija = {
-              id: doc.id,
-              nositelj: podatci.nositelj,
-            };
-
+      axios
+        .get(BaseUrl + `/rezervacija`)
+        .then((response) => {
+          for (let rezervacija of response.data) {
             this.rezervacije.push(rezervacija);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
-    },*/
+    },
   },
 };
 </script>

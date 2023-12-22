@@ -20,8 +20,9 @@
 <script>
 // @ is an alias to /src
 import PersonalBttn from "@/components/Personal-bttn.vue";
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
 import store from "@/store";
+const axios = require("axios");
 export default {
   name: "Personal",
   components: {
@@ -29,73 +30,30 @@ export default {
   },
   data() {
     return {
-      osobe: [
-        {
-          id: 1,
-          ime: "Đuro",
-          prezime: "Đurić",
-          ulica: "Ulica2",
-          kucni_br: "1",
-          pbr: "123321",
-          email: "d.duric@proba.hr",
-          satnica: "5",
-        },
-        {
-          id: 2,
-          ime: "Kata",
-          prezime: "Katić",
-          ulica: "Ulica2",
-          kucni_br: "2",
-          pbr: "123321",
-          email: "Kata.katic@proba.hr",
-          satnica: "6",
-        },
-        {
-          id: 3,
-          ime: "Mara",
-          prezime: "Marić",
-          ulica: "Ulica3",
-          kucni_br: "3",
-          pbr: "111111",
-          email: "mara.maric@proba.hr",
-          satnica: "4",
-        },
-      ],
+      osobe: [],
     };
   },
   mounted() {
-    //this.dohvatiPers();
+    this.dohvatiPers();
   },
   methods: {
     dodajPers() {
       this.$router.push("/dodaj_pers");
     },
-    /* dohvatiPers() {
+    dohvatiPers() {
       let osobe = [];
 
-      baza
-        .collection("personal")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("prezime", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let osoba = {
-              id: doc.id,
-              ime: podatci.ime,
-              prezime: podatci.prezime,
-              ulica: podatci.ulica,
-              kucni_br: podatci.kucni_broj,
-              pbr: podatci.post_broj,
-              email: podatci.e_mail,
-              satnica: podatci.satnica,
-            };
-
+      axios
+        .get(BaseUrl + `/osoba`)
+        .then((response) => {
+          for (let osoba of response.data) {
             this.osobe.push(osoba);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
-    },*/
+    },
   },
 };
 </script>

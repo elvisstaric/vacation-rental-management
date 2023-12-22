@@ -25,7 +25,8 @@
 </template>
 <script>
 import CiscenjeBttn from "@/components/Ciscenje-bttn.vue";
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   components: { CiscenjeBttn },
@@ -45,22 +46,17 @@ export default {
     },
     dohvatiCiscenja() {
       let ciscenja = [];
-      let id_obj = this.$route.params.id;
+      let id_obj = this.$route.params._id; //DODATI!!!
 
-      baza
-        .collection("ciscenja")
-        .where("objekt_id", "==", id_obj)
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let ciscenje = {
-              id: doc.id,
-              datum: podatci.datum,
-            };
-
+      axios
+        .get(BaseUrl + `/ciscenje`)
+        .then((response) => {
+          for (let ciscenje of response.data) {
             this.ciscenja.push(ciscenje);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },

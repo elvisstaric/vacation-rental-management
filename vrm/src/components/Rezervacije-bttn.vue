@@ -18,7 +18,7 @@ export default {
   methods: {
     preusmjeri() {
       this.$router.push({
-        path: `${this.$route.name}/${this.info.id}`,
+        path: `${this.$route.name}/${this.info._id}`,
       });
     },
   },

@@ -120,16 +120,17 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   name: "",
   props: ["id_rez"],
   data() {
-    return { rezervacija: [] };
+    return { rezervacija: {} };
   },
   mounted() {
-    //this.dohvatiRezervaciju();
+    this.dohvatiRezervaciju();
   },
   methods: {
     obrisiRez() {
@@ -168,17 +169,19 @@ export default {
           console.error("Greška ", error);
         });
     },
-    /*dohvatiRezervaciju() {
-      let rezervacija = [];
-      baza
-        .collection("rezervacije")
-        .doc(this.id_rez)
-        .get()
-        .then((rez) => {
-          this.rezervacija = rez.data();
-          this.rezervacija.id = this.id_rez;
+    dohvatiRezervaciju() {
+      let rezervacija = {};
+      axios
+        .get(BaseUrl + `/rezervacija/` + this.id_rez)
+        .then((response) => {
+          for (let rez of response.data) {
+            this.rezervacija = rez;
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
-    },*/
+    },
   },
 };
 </script>

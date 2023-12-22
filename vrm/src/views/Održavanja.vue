@@ -25,7 +25,8 @@
 </template>
 <script>
 import OdrzavanjeBttn from "@/components/Odrzavanje-bttn.vue";
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   components: { OdrzavanjeBttn },
@@ -45,22 +46,17 @@ export default {
     },
     dohvatiOdrzavanja() {
       let odrzavanja = [];
-      let id_obj = this.$route.params.id;
+      let id_obj = this.$route.params._id; //DODATI!!!!
 
-      baza
-        .collection("odrzavanja")
-        .where("objekt_id", "==", id_obj)
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let odrzavanje = {
-              id: doc.id,
-              naziv: podatci.naziv,
-            };
-
+      axios
+        .get(BaseUrl + `/odrzavanje`)
+        .then((response) => {
+          for (let odrzavanje of response.data) {
             this.odrzavanja.push(odrzavanje);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },

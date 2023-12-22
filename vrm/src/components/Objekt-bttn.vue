@@ -17,7 +17,7 @@ export default {
   props: ["info"],
   methods: {
     otvoriObj() {
-      this.$router.push({ path: `moji_objekti/objekt/${this.info.id}` });
+      this.$router.push({ path: `moji_objekti/objekt/${this.info._id}` });
     },
   },
 };

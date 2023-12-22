@@ -17,7 +17,7 @@ export default {
   props: ["osobe"],
   methods: {
     otvoriOsobu() {
-      this.$router.push({ path: `personal/osoba/${this.osobe.id}` });
+      this.$router.push({ path: `personal/osoba/${this.osobe._id}` });
     },
   },
 };
