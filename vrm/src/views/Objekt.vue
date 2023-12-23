@@ -17,7 +17,8 @@
 </template>
 <script>
 import ObjektInfoBttn from "@/components/Objekt-info-bttn.vue";
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   components: { ObjektInfoBttn },
@@ -38,7 +39,7 @@ export default {
     };
   },
   mounted() {
-    //this.dohvatiObj();
+    this.dohvatiObj();
   },
   methods: {
     obrisiObj() {
@@ -54,17 +55,19 @@ export default {
           console.error("Greška ", error);
         });
     },
-    /*dohvatiObj() {
+    dohvatiObj() {
       let objekt = [];
-      baza
-        .collection("objekti")
-        .doc(this.id)
-        .get()
-        .then((rez) => {
-          this.objekt = rez.data();
-          this.objekt.id = this.id;
+      axios
+        .get(BaseUrl + `/objekt/` + this.id)
+        .then((response) => {
+          for (let objekt of response.data) {
+            this.objekt = objekt;
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
-    },*/
+    },
   },
 };
 </script>

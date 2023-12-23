@@ -64,7 +64,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 import store from "@/store";
 
 export default {
@@ -114,35 +115,35 @@ export default {
     },
     dohvatiCiscenje() {
       let ciscenje = [];
-      baza
-        .collection("ciscenja")
-        .doc(this.id_ciscenje)
-        .get()
-        .then((rez) => {
-          this.ciscenje = rez.data();
-          this.ciscenje.id = this.id_ciscenje;
-          console.log(this.ciscenje);
+      axios
+        .get(BaseUrl + `/ciscenje/` + this.id_ciscenje)
+        .then((response) => {
+          for (let ciscenje of response.data) {
+            this.ciscenje = ciscenje;
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
     dohvatiPers() {
       let osobe = [];
 
-      baza
-        .collection("personal")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("prezime", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
+      axios
+        .get(BaseUrl + `/osoba`)
+        .then((response) => {
+          for (let podatci of response.data) {
             let osoba = {
-              id: doc.id,
+              id: podatci._id,
               ime: podatci.ime,
               prezime: podatci.prezime,
             };
 
             this.osobe.push(osoba);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },

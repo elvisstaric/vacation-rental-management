@@ -102,7 +102,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   name: "",
@@ -111,7 +112,7 @@ export default {
     return { osoba: [] };
   },
   mounted() {
-    //this.dohvatiOsobu();
+    this.dohvatiOsobu();
   },
   methods: {
     obrisiPers() {
@@ -150,13 +151,15 @@ export default {
     },
     dohvatiOsobu() {
       let osoba = [];
-      baza
-        .collection("personal")
-        .doc(this.id)
-        .get()
-        .then((rez) => {
-          this.osoba = rez.data();
-          this.osoba.id = this.id;
+      axios
+        .get(BaseUrl + `/osoba/` + this.id)
+        .then((response) => {
+          for (let osoba of response.data) {
+            this.osoba = osoba;
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },

@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   name: "",
@@ -48,7 +49,7 @@ export default {
     return { odrzavanje: [] };
   },
   mounted() {
-    //this.dohvatiOdrzavanje();
+    this.dohvatiOdrzavanje();
   },
   methods: {
     obrisiOdrzavanje() {
@@ -68,13 +69,15 @@ export default {
     },
     dohvatiOdrzavanje() {
       let odrzavanje = [];
-      baza
-        .collection("odrzavanja")
-        .doc(this.id_odrzavanje)
-        .get()
-        .then((rez) => {
-          this.odrzavanje = rez.data();
-          this.odrzavanje.id = this.id_ciscenje;
+      axios
+        .get(BaseUrl + `/odrzavanje/` + this.id_odrzavanje)
+        .then((response) => {
+          for (let odrzavanje of response.data) {
+            this.odrzavanje = odrzavanje;
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },
