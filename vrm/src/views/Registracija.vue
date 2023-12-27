@@ -57,7 +57,9 @@
 </template>
 
 <script>
-//import { firebase } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
+
 export default {
   name: "Registracija",
   data() {
@@ -68,18 +70,34 @@ export default {
     };
   },
   methods: {
-    /*registracija() {
+    registracija() {
       if (this.password != this.passwordctrl) {
         alert("Lozinke se ne podudaraju");
-      } else if (this.password == this.passwordctrl) {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .catch(function (error) {
-            console.log(error);
+      } else if (!this.password) {
+        alert("Unesite lozinku!");
+      } else if (this.password.length < 6) {
+        alert("Lozinka mora imati barem 6 znakova!");
+      } else if (
+        this.password == this.passwordctrl &&
+        this.password &&
+        this.password.length >= 6
+      ) {
+        const podatci = {
+          email: this.email,
+          password: this.password,
+        };
+        axios
+          .post(BaseUrl + "/korisnik", podatci)
+          .then((response) => {
+            alert("Korisnik uspiješno registriran.");
+            console.log("Response:", response.data);
+          })
+          .catch((error) => {
+            alert(error.response.data.error);
+            console.log("Error:", error);
           });
       }
-    },*/
+    },
   },
 };
 </script>

@@ -1,14 +1,16 @@
 <template>
   <div class="bg">
     <nav>
-      <router-link v-if="store.korisnik" to="/">Home</router-link>
-      <router-link v-if="!store.korisnik" to="/login">Log In</router-link>
+      <router-link to="/">Home</router-link>
+      <!-- v-if="store.korisnik" -->
+      <router-link to="/login">Log In</router-link>
+      <!--v-if="!store.korisnik"  -->
       |
-      <router-link v-if="!store.korisnik" to="/registracija"
-        >Registracija</router-link
-      >
+      <router-link to="/registracija">Registracija</router-link>
+      <!-- v-if="!store.korisnik" -->
 
-      <a v-if="store.korisnik" href="#" @click.prevent="odjava()">Odjava </a>
+      <a href="#" @click.prevent="odjava()">Odjava </a>
+      <!-- v-if="store.korisnik" -->
     </nav>
     <router-view />
   </div>
@@ -20,8 +22,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-  //filter: blur(1px);
-  //-webkit-filter: blur(1px);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
