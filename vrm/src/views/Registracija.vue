@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import router from "@/router";
 let BaseUrl = "http://127.0.0.1:3000";
 const axios = require("axios");
 
@@ -90,6 +91,9 @@ export default {
           .post(BaseUrl + "/korisnik", podatci)
           .then((response) => {
             alert("Korisnik uspiješno registriran.");
+            this.$router.push({
+              path: `/login`,
+            });
             console.log("Response:", response.data);
           })
           .catch((error) => {

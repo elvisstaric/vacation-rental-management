@@ -47,7 +47,9 @@
 </template>
 
 <script>
-import { firebase } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
+
 export default {
   name: "Prijava",
   data() {
@@ -58,12 +60,16 @@ export default {
   },
   methods: {
     prijava() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then((rez) => {})
+      axios
+        .get(
+          BaseUrl + `/korisnik?email=${this.email}&password=${this.password}`
+        )
+        .then((response) => {
+          console.log("Response:", response.data);
+        })
         .catch((error) => {
-          console.error("Greška", error);
+          alert(error.response.data.error);
+          console.log("Error:", error);
         });
     },
   },
