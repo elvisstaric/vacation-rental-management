@@ -69,8 +69,13 @@ export default {
     },
     dohvatiOdrzavanje() {
       let odrzavanje = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
       axios
-        .get(BaseUrl + `/odrzavanje/` + this.id_odrzavanje)
+        .get(BaseUrl + `/odrzavanje/` + this.id_odrzavanje, podatci)
         .then((response) => {
           for (let odrzavanje of response.data) {
             this.odrzavanje = odrzavanje;

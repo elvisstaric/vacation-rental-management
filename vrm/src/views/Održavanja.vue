@@ -46,10 +46,15 @@ export default {
     },
     dohvatiOdrzavanja() {
       let odrzavanja = [];
-      let id_obj = this.$route.params._id; //DODATI!!!!
-
+      let id_obj = this.$route.params.id;
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          id_obj: id_obj,
+        },
+      };
       axios
-        .get(BaseUrl + `/odrzavanje`)
+        .get(BaseUrl + `/odrzavanje`, podatci)
         .then((response) => {
           for (let odrzavanje of response.data) {
             this.odrzavanja.push(odrzavanje);

@@ -57,8 +57,13 @@ export default {
     },
     dohvatiObj() {
       let objekt = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
       axios
-        .get(BaseUrl + `/objekt/` + this.id)
+        .get(BaseUrl + `/objekt/` + this.id, podatci)
         .then((response) => {
           for (let objekt of response.data) {
             this.objekt = objekt;

@@ -65,7 +65,11 @@ export default {
           BaseUrl + `/korisnik?email=${this.email}&password=${this.password}`
         )
         .then((response) => {
-          console.log("Response:", response.data);
+          localStorage.setItem("token", response.data);
+          localStorage.setItem("korisnik", this.email);
+          this.$router.replace("/").then(() => {
+            this.$router.go();
+          });
         })
         .catch((error) => {
           alert(error.response.data.error);

@@ -201,9 +201,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const nemaKorisnika = store.korisnik === null;
-
-  if (nemaKorisnika && to.meta.needsUser) {
+  const korisnik_token = localStorage.getItem("token");
+  if (!korisnik_token && to.meta.needsUser) {
     next("login");
   } else {
     next();

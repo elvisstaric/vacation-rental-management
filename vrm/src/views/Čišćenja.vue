@@ -46,10 +46,15 @@ export default {
     },
     dohvatiCiscenja() {
       let ciscenja = [];
-      let id_obj = this.$route.params._id; //DODATI!!!
-
+      let id_obj = this.$route.params.id;
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          id_obj: id_obj,
+        },
+      };
       axios
-        .get(BaseUrl + `/ciscenje`)
+        .get(BaseUrl + `/ciscenje`, podatci)
         .then((response) => {
           for (let ciscenje of response.data) {
             this.ciscenja.push(ciscenje);

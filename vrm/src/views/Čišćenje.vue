@@ -66,7 +66,6 @@
 <script>
 let BaseUrl = "http://127.0.0.1:3000";
 const axios = require("axios");
-import store from "@/store";
 
 export default {
   name: "",
@@ -115,8 +114,13 @@ export default {
     },
     dohvatiCiscenje() {
       let ciscenje = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
       axios
-        .get(BaseUrl + `/ciscenje/` + this.id_ciscenje)
+        .get(BaseUrl + `/ciscenje/` + this.id_ciscenje, podatci)
         .then((response) => {
           for (let ciscenje of response.data) {
             this.ciscenje = ciscenje;
@@ -128,9 +132,14 @@ export default {
     },
     dohvatiPers() {
       let osobe = [];
-
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
       axios
-        .get(BaseUrl + `/osoba`)
+        .get(BaseUrl + `/osoba`, podatci)
         .then((response) => {
           for (let podatci of response.data) {
             let osoba = {

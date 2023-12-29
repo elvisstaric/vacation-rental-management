@@ -46,10 +46,15 @@ export default {
     },
     dohvatiRez() {
       let rezervacije = [];
-      let id_obj = this.$route.params.id; //dodati ovo!!!!
-
+      let id_obj = this.$route.params.id;
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          id_obj: id_obj,
+        },
+      };
       axios
-        .get(BaseUrl + `/rezervacija`)
+        .get(BaseUrl + `/rezervacija`, podatci)
         .then((response) => {
           for (let rezervacija of response.data) {
             this.rezervacije.push(rezervacija);

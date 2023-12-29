@@ -21,7 +21,6 @@
 // @ is an alias to /src
 import PersonalBttn from "@/components/Personal-bttn.vue";
 let BaseUrl = "http://127.0.0.1:3000";
-import store from "@/store";
 const axios = require("axios");
 export default {
   name: "Personal",
@@ -42,9 +41,15 @@ export default {
     },
     dohvatiPers() {
       let osobe = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
 
       axios
-        .get(BaseUrl + `/osoba`)
+        .get(BaseUrl + `/osoba`, podatci)
         .then((response) => {
           for (let osoba of response.data) {
             this.osobe.push(osoba);

@@ -171,8 +171,13 @@ export default {
     },
     dohvatiRezervaciju() {
       let rezervacija = {};
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
       axios
-        .get(BaseUrl + `/rezervacija/` + this.id_rez)
+        .get(BaseUrl + `/rezervacija/` + this.id_rez, podatci)
         .then((response) => {
           for (let rez of response.data) {
             this.rezervacija = rez;

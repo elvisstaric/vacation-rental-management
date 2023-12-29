@@ -151,8 +151,13 @@ export default {
     },
     dohvatiOsobu() {
       let osoba = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
       axios
-        .get(BaseUrl + `/osoba/` + this.id)
+        .get(BaseUrl + `/osoba/` + this.id, podatci)
         .then((response) => {
           for (let osoba of response.data) {
             this.osoba = osoba;

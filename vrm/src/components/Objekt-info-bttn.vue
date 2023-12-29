@@ -19,7 +19,7 @@ export default {
     preusmjeri() {
       let poveznica = String(this.tekst.link);
       this.$router.push({
-        path: `${this.$route.params._id}${poveznica}`,
+        path: `${this.$route.params.id}${poveznica}`,
       });
     },
   },

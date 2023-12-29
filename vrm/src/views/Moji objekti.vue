@@ -21,7 +21,6 @@
 // @ is an alias to /src
 import ObjektBttn from "@/components/Objekt-bttn.vue";
 let BaseUrl = "http://127.0.0.1:3000";
-import store from "@/store";
 const axios = require("axios");
 
 export default {
@@ -44,8 +43,15 @@ export default {
     },
     dohvatiObj() {
       let info = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
+
       axios
-        .get(BaseUrl + `/objekt`)
+        .get(BaseUrl + `/objekt`, podatci)
         .then((response) => {
           for (let objekt of response.data) {
             this.info.push(objekt);

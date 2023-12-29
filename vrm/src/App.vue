@@ -1,16 +1,16 @@
 <template>
   <div class="bg">
     <nav>
-      <router-link to="/">Home</router-link>
-      <!-- v-if="store.korisnik" -->
-      <router-link to="/login">Log In</router-link>
-      <!--v-if="!store.korisnik"  -->
-      |
-      <router-link to="/registracija">Registracija</router-link>
-      <!-- v-if="!store.korisnik" -->
+      <router-link v-if="auth.autorizacija" to="/">Home</router-link>
 
-      <a href="#" @click.prevent="odjava()">Odjava </a>
-      <!-- v-if="store.korisnik" -->
+      <router-link v-if="!auth.autorizacija" to="/login">Log In</router-link>
+
+      |
+      <router-link v-if="!auth.autorizacija" to="/registracija"
+        >Registracija</router-link
+      >
+
+      <a href="#" v-if="auth.autorizacija" @click.prevent="odjava()">Odjava </a>
     </nav>
     <router-view />
   </div>
@@ -45,45 +45,20 @@ nav {
 }
 </style>
 <script>
-import { firebase } from "@/firebase";
 import store from "@/store";
-import router from "@/router";
-
-firebase.auth().onAuthStateChanged((user) => {
-  const ruta = router.currentRoute;
-
-  if (user) {
-    console.log("*** User", user.email);
-    store.korisnik = user.email;
-
-    if (!ruta.value.meta.needsUser) {
-      router.push("/");
-    }
-  } else {
-    console.log("*** No user");
-    store.korisnik = null;
-
-    if (ruta.value.meta.needsUser) {
-      router.push("/login");
-    }
-  }
-});
 
 export default {
   name: "VRM",
   data() {
     return {
-      store,
+      auth: store.status,
     };
   },
   methods: {
     odjava() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.replace("/login");
-        });
+      localStorage.removeItem("token");
+      localStorage.removeItem("korisnik");
+      this.$router.go();
     },
   },
 };
