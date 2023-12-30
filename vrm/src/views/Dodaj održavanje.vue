@@ -52,8 +52,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 export default {
   name: "Dodaj održavanje",
 
@@ -68,16 +68,20 @@ export default {
 
   methods: {
     dodajOdrzavanje() {
-      baza
-        .collection("odrzavanja")
-        .add({
+      let podatci = {
+        podatci: {
           naziv: this.naziv,
           rok: this.rok,
           opis: this.opis,
           objekt_id: this.id_obj,
-        })
-        .then((spremljeno) => {
-          console.log("Spremljeno", spremljeno);
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .post(BaseUrl + "/odrzavanje", podatci, { headers: podatci.headers })
+        .then((response) => {
           this.naziv = "";
           this.rok = "";
           this.opis = "";
@@ -86,8 +90,8 @@ export default {
             path: `/moji_objekti/objekt/${this.$route.params.id}/odrzavanja`,
           });
         })
-        .catch((greska) => {
-          console.error("Greška", greska);
+        .catch((error) => {
+          console.log("Error:", error);
         });
     },
   },

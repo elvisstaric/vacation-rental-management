@@ -103,8 +103,9 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
-import store from "@/store";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
+
 export default {
   name: "",
   data: function () {
@@ -120,9 +121,8 @@ export default {
   },
   methods: {
     dodajPersonal() {
-      baza
-        .collection("personal")
-        .add({
+      let podatci = {
+        podatci: {
           ime: this.persIme,
           prezime: this.persPrezime,
           e_mail: this.persEmail,
@@ -130,10 +130,15 @@ export default {
           kucni_broj: this.persKbr,
           post_broj: this.persPbr,
           satnica: this.persSatnica,
-          korisnik: store.korisnik,
-        })
-        .then((spremljeno) => {
-          console.log("Spremljeno", spremljeno);
+          korisnik: localStorage.getItem("korisnik"),
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .post(BaseUrl + "/osoba", podatci, { headers: podatci.headers })
+        .then((response) => {
           this.persIme = "";
           this.persPrezime = "";
           this.persEmail = "";
@@ -143,8 +148,8 @@ export default {
           this.persSatnica = "";
           this.$router.push("/personal");
         })
-        .catch((greska) => {
-          console.error("Greška", greska);
+        .catch((error) => {
+          console.log("Error:", error);
         });
     },
   },

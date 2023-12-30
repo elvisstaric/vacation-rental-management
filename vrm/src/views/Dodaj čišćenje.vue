@@ -30,16 +30,16 @@
             <div class="form-group">
               <label>Personal</label>
               <br /><br />
-              <div v-for="osoba in osobe" :key="osoba.id" :osoba="osobe">
+              <div v-for="osoba in osobe" :key="osoba._id" :osoba="osobe">
                 <input
                   type="checkbox"
                   v-model="personal"
-                  :id="osoba.id"
+                  :id="osoba._id"
                   :name="osoba.ime"
-                  :value="osoba.id"
+                  :value="osoba._id"
                 />
-                <label :for="osoba.id"
-                  >{{ osoba.ime }}{{ osoba.prezime }}</label
+                <label :for="osoba._id"
+                  >{{ osoba.ime }} {{ " " }}{{ osoba.prezime }}</label
                 >
                 <br />
                 <br />
@@ -64,8 +64,8 @@
 
 <script>
 // @ is an alias to /src
-import { baza } from "@/firebase";
-import store from "@/store";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 export default {
   name: "Dodaj čišćenje",
 
@@ -83,16 +83,20 @@ export default {
   },
   methods: {
     dodajCiscenje() {
-      baza
-        .collection("ciscenja")
-        .add({
+      let podatci = {
+        podatci: {
           objekt_id: this.id_obj,
           datum: this.datum,
           trajanje: this.trajanje,
           personal: this.personal,
-        })
-        .then((spremljeno) => {
-          console.log("Spremljeno", spremljeno);
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .post(BaseUrl + "/ciscenje", podatci, { headers: podatci.headers })
+        .then((response) => {
           this.datum = "";
           this.trajanje = "";
           this.personal = [];
@@ -101,30 +105,29 @@ export default {
             path: `/moji_objekti/objekt/${this.$route.params.id}/ciscenja`,
           });
         })
-        .catch((greska) => {
-          console.error("Greška", greska);
+        .catch((error) => {
+          console.log("Error:", error);
         });
     },
 
     dohvatiPers() {
       let osobe = [];
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
 
-      baza
-        .collection("personal")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("prezime", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
-            let osoba = {
-              id: doc.id,
-              ime: podatci.ime,
-              prezime: podatci.prezime,
-            };
-
+      axios
+        .get(BaseUrl + `/osoba`, podatci)
+        .then((response) => {
+          for (let osoba of response.data) {
             this.osobe.push(osoba);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
   },

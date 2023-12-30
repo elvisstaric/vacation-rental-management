@@ -112,7 +112,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 export default {
   name: "",
 
@@ -129,31 +130,34 @@ export default {
 
   methods: {
     dodajRez() {
-      baza
-        .collection("rezervacije")
-        .add({
+      let podatci = {
+        podatci: {
           objekt_id: this.id,
           nositelj: this.rezNositelj,
           rezervacija_od: this.rezOd,
           rezervacija_do: this.rezDo,
           naplata: this.rezNaplata,
           iznos: this.rezIznos,
-        })
-        .then((spremljeno) => {
-          console.log("Spremljeno", spremljeno);
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .post(BaseUrl + "/rezervacija", podatci, { headers: podatci.headers })
+        .then((response) => {
+          this.$router.push({
+            path: `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`,
+          });
           this.objekt_id = "";
           this.rezNositelj = "";
           this.rezOd = "";
           this.rezDo = "";
           this.rezNaplata = "";
           this.rezIznos = "";
-
-          this.$router.push({
-            path: `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`,
-          });
         })
-        .catch((greska) => {
-          console.error("Greška", greska);
+        .catch((error) => {
+          console.log("Error:", error);
         });
     },
   },
