@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
-import store from "@/store";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 
 export default {
   name: "",
@@ -57,40 +57,51 @@ export default {
   methods: {
     dohvatiObjekte() {
       let objekti = [];
-      baza
-        .collection("objekti")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("objekt", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
+
+      axios
+        .get(BaseUrl + `/objekt`, podatci)
+        .then((response) => {
+          for (let podatci of response.data) {
             let objekt = {
-              id: doc.id,
+              id: podatci._id,
               naziv: podatci.objekt,
             };
             this.objekti.push(objekt);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
     dohvatiRez() {
       let rezervacije = [];
 
-      baza
-        .collection("rezervacije")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .get(BaseUrl + `/rezervacija_financije`, podatci)
+        .then((response) => {
+          for (let podatci of response.data) {
             let rezervacija = {
-              id: doc.id,
+              id: podatci._id,
               id_obj: podatci.objekt_id,
               status: podatci.naplata,
               iznos: podatci.iznos,
             };
-
             this.rezervacije.push(rezervacija);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
     suma_napl(objektid) {
@@ -112,7 +123,7 @@ export default {
           sum = sum + rezervacija.iznos;
       }
 
-      return sum * 0.3;
+      return (sum * 0.3).toFixed(2);
     },
     suma_ne_npl(objektid) {
       let sum = 0;

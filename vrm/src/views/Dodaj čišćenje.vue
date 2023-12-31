@@ -63,7 +63,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 let BaseUrl = "http://127.0.0.1:3000";
 const axios = require("axios");
 export default {

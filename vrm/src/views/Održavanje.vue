@@ -53,18 +53,22 @@ export default {
   },
   methods: {
     obrisiOdrzavanje() {
-      baza
-        .collection("odrzavanja")
-        .doc(this.id_odrzavanje)
-        .delete()
-        .then(() => {
-          console.log("Obrisano");
+      const podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .delete(BaseUrl + "/odrzavanje/" + this.id_odrzavanje, {
+          headers: podatci.headers,
+        })
+        .then((response) => {
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/odrzavanja`
           );
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error: ", error);
         });
     },
     dohvatiOdrzavanje() {

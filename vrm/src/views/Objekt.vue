@@ -43,16 +43,20 @@ export default {
   },
   methods: {
     obrisiObj() {
-      baza
-        .collection("objekti")
-        .doc(this.id)
-        .delete()
-        .then(() => {
-          console.log("Obrisano");
-          this.$router.push("/moji_objekti/");
+      const podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .delete(BaseUrl + "/objekt/" + this.id, {
+          headers: podatci.headers,
+        })
+        .then((response) => {
+          this.$router.push(`/moji_objekti/`);
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error: ", error);
         });
     },
     dohvatiObj() {

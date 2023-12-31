@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import PocetnaBttn from "@/components/Pocetna-bttn.vue";
 
 export default {

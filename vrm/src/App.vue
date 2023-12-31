@@ -58,7 +58,9 @@ export default {
     odjava() {
       localStorage.removeItem("token");
       localStorage.removeItem("korisnik");
-      this.$router.go();
+      this.$router.replace("/login").then(() => {
+        this.$router.go();
+      });
     },
   },
 };

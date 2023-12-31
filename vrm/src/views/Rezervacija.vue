@@ -134,39 +134,53 @@ export default {
   },
   methods: {
     obrisiRez() {
-      baza
-        .collection("rezervacije")
-        .doc(this.id_rez)
-        .delete()
-        .then(() => {
-          console.log("Obrisano");
+      const podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .delete(BaseUrl + "/rezervacija/" + this.id_rez, {
+          headers: podatci.headers,
+        })
+        .then((response) => {
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`
           );
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error: ", error);
         });
     },
     urediRez() {
-      baza
-        .collection("rezervacije")
-        .doc(this.id_rez)
-        .update({
+      const podatci_update = {
+        podatci: {
           nositelj: this.rezervacija.nositelj,
           rezervacija_od: this.rezervacija.rezervacija_od,
           rezervacija_do: this.rezervacija.rezervacija_do,
           naplata: this.rezervacija.naplata,
           iznos: this.rezervacija.iznos,
-        })
-        .then(() => {
-          console.log("Spremljeno");
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+
+      axios
+        .patch(
+          BaseUrl + "/rezervacija/" + this.id_rez,
+          podatci_update.podatci,
+          {
+            headers: podatci_update.headers,
+          }
+        )
+        .then((response) => {
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/rezervacije`
           );
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error:", error);
         });
     },
     dohvatiRezervaciju() {

@@ -116,23 +116,25 @@ export default {
   },
   methods: {
     obrisiPers() {
-      baza
-        .collection("personal")
-        .doc(this.id)
-        .delete()
-        .then(() => {
-          console.log("Obrisano");
-          this.$router.push("/personal");
+      const podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .delete(BaseUrl + "/osoba/" + this.id, {
+          headers: podatci.headers,
+        })
+        .then((response) => {
+          this.$router.push(`/personal`);
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error: ", error);
         });
     },
     urediPers() {
-      baza
-        .collection("personal")
-        .doc(this.id)
-        .update({
+      const podatci_update = {
+        podatci: {
           ime: this.osoba.ime,
           prezime: this.osoba.prezime,
           e_mail: this.osoba.e_mail,
@@ -140,13 +142,21 @@ export default {
           kucni_broj: this.osoba.kucni_broj,
           post_broj: this.osoba.post_broj,
           satnica: this.osoba.satnica,
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+
+      axios
+        .patch(BaseUrl + "/osoba/" + this.id, podatci_update.podatci, {
+          headers: podatci_update.headers,
         })
-        .then(() => {
-          console.log("Spremljeno");
+        .then((response) => {
           this.$router.push(`/personal`);
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error:", error);
         });
     },
     dohvatiOsobu() {

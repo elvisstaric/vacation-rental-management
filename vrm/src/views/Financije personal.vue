@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { baza } from "@/firebase";
-import store from "@/store";
+let BaseUrl = "http://127.0.0.1:3000";
+const axios = require("axios");
 export default {
   name: "",
   data() {
@@ -42,42 +42,53 @@ export default {
   methods: {
     dohvatiPersonal() {
       let personal = [];
-      baza
-        .collection("personal")
-        .where("korisnik", "==", store.korisnik)
-        .orderBy("prezime", "asc")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+          korisnik: localStorage.getItem("korisnik"),
+        },
+      };
+      axios
+        .get(BaseUrl + `/osoba`, podatci)
+        .then((response) => {
+          for (let podatci of response.data) {
             let osoba = {
-              id: doc.id,
+              id: podatci._id,
               ime: podatci.ime,
               prezime: podatci.prezime,
               satnica: podatci.satnica,
             };
-
             this.personal.push(osoba);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
+
     dohvatiCiscenja() {
       let ciscenja = [];
 
-      baza
-        .collection("ciscenja")
-        .get()
-        .then((rez) => {
-          rez.forEach((doc) => {
-            const podatci = doc.data();
+      let podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .get(BaseUrl + `/ciscenje_financije`, podatci)
+        .then((response) => {
+          for (let podatci of response.data) {
             let ciscenje = {
-              id: doc.id,
+              id: podatci._id,
               trajanje: podatci.trajanje,
               personal: podatci.personal,
             };
 
             this.ciscenja.push(ciscenje);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
         });
     },
     suma(osobaid) {

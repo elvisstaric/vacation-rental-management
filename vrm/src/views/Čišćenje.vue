@@ -79,37 +79,51 @@ export default {
   },
   methods: {
     obrisiCiscenje() {
-      baza
-        .collection("ciscenja")
-        .doc(this.id_ciscenje)
-        .delete()
-        .then(() => {
-          console.log("Obrisano");
+      const podatci = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      axios
+        .delete(BaseUrl + "/ciscenje/" + this.id_ciscenje, {
+          headers: podatci.headers,
+        })
+        .then((response) => {
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/ciscenja`
           );
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error: ", error);
         });
     },
     urediCiscenje() {
-      baza
-        .collection("ciscenja")
-        .doc(this.id_ciscenje)
-        .update({
+      const podatci_update = {
+        podatci: {
           datum: this.ciscenje.datum,
           trajanje: this.ciscenje.trajanje,
           personal: this.ciscenje.personal,
-        })
-        .then(() => {
-          console.log("Spremljeno");
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+
+      axios
+        .patch(
+          BaseUrl + "/ciscenje/" + this.id_ciscenje,
+          podatci_update.podatci,
+          {
+            headers: podatci_update.headers,
+          }
+        )
+        .then((response) => {
           this.$router.push(
             `/moji_objekti/objekt/${this.$route.params.id}/ciscenja`
           );
         })
         .catch((error) => {
-          console.error("Greška ", error);
+          console.error("Error:", error);
         });
     },
     dohvatiCiscenje() {
