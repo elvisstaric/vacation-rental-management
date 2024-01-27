@@ -52,7 +52,7 @@
 </template>
 
 <script>
-let BaseUrl = "http://127.0.0.1:3000";
+let BaseUrl = process.env.VUE_APP_URL;
 const axios = require("axios");
 export default {
   name: "Dodaj održavanje",
